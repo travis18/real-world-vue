@@ -37,6 +37,6 @@ export default {
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
-  margin-right: 6px.;
+  margin-right: 6px;
 }
 </style>
