@@ -17,7 +17,9 @@ export default new Vuex.Store({
       'community'
     ],
     events: [],
-    newEventId: 0
+    event,
+    newEventId: 0,
+    eventsTotal: 0
   },
   getters: {
     catLength: state => {
@@ -31,6 +33,12 @@ export default new Vuex.Store({
     ADD_EVENT(state, event) {
       state.events.push(event)
       state.newEventId = event.id
+    },
+    SET_EVENTS(state, events) {
+      state.events = events
+    },
+    SET_EVENT(state, event) {
+      state.event = event
     }
   },
   actions: {
@@ -38,6 +46,32 @@ export default new Vuex.Store({
       return EventService.postEvent(event).then(response => {
         commit('ADD_EVENT', response.data)
       })
+    },
+    fetchEvents({ commit }, { perPage, page }) {
+      EventService.getEvents(perPage, page)
+        .then(response => {
+          commit('SET_EVENTS', response.data)
+          this.state.eventsTotal =
+            parseInt(response.headers['x-total-count']) || 0
+        })
+        .catch(error => {
+          console.log('There was an error:', error.response)
+        })
+    },
+    fetchEvent({ commit, getters }, id) {
+      var event = getters.getEventById(id)
+
+      if (event) {
+        commit('SET_EVENT', event)
+      } else {
+        EventService.getEventById(id)
+          .then(response => {
+            commit('SET_EVENT', response.data)
+          })
+          .catch(error => {
+            console.log('There was an error:', error.response)
+          })
+      }
     }
   }
 })
