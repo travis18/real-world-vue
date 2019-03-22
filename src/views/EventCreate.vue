@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     createFreshEvent() {
-      const user = this.$store.state.catetories
+      const user = this.$store.state.user.user
       return {
         category: '',
         organizer: user,
