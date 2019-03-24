@@ -12,8 +12,6 @@ export const mutations = {
       ...notification,
       id: nextId++
     })
-    console.log('notification PUSH mutation')
-    console.log(state.notifications)
   },
   DELETE(state, notificationToRemove) {
     state.notifications = state.notifications.filter(
@@ -24,7 +22,6 @@ export const mutations = {
 
 export const actions = {
   add({ commit }, notification) {
-    console.log('notification add action')
     commit('PUSH', notification)
   },
   remove({ commit }, notificationToRemove) {

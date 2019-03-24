@@ -61,7 +61,6 @@ export const actions = {
   },
   fetchEvent({ commit, getters, dispatch }, id) {
     var event = getters.getEventById(id)
-
     if (event) {
       commit('SET_EVENT', event)
       const notification = {
@@ -69,9 +68,8 @@ export const actions = {
         message: 'Successfully get event by id from cache'
       }
       dispatch('notification/add', notification, { root: true })
-      console.log('fetchEvent cache')
     } else {
-      EventService.getEventById(id)
+      EventService.getEvent(id)
         .then(response => {
           commit('SET_EVENT', response.data)
           const notification = {
@@ -79,7 +77,6 @@ export const actions = {
             message: 'Successfully get event by id from server'
           }
           dispatch('notification/add', notification, { root: true })
-          console.log('fetchEvent server')
         })
         .catch(error => {
           const notification = {
