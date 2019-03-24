@@ -88,7 +88,7 @@ export default {
     createEvent() {
       let that = this
       this.$store
-        .dispatch('createEvent', this.event)
+        .dispatch('event/createEvent', this.event)
         .then(() => {
           this.$router.push({
             name: 'event-show',
@@ -96,9 +96,7 @@ export default {
           })
           this.event = this.createFreshEvent()
         })
-        .catch(error => {
-          console.log('There was a problem creating your event.', error)
-        })
+        .catch(() => {})
     }
   },
   components: {
