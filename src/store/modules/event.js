@@ -69,7 +69,7 @@ export const actions = {
       }
       dispatch('notification/add', notification, { root: true })
     } else {
-      EventService.getEvent(id)
+      return EventService.getEvent(id)
         .then(response => {
           commit('SET_EVENT', response.data)
           const notification = {
