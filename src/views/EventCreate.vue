@@ -49,6 +49,8 @@
 <script>
 import { mapState } from 'vuex'
 import Datepicker from 'vuejs-datepicker'
+import NProgress from 'nprogress'
+import store from '@/store'
 
 export default {
   data() {
@@ -64,8 +66,9 @@ export default {
   },
   computed: {
     ...mapState({
-      userName: state => state.user.name,
-      catetories: 'categories'
+      userName: state => state.user.user.name,
+      catetories: 'categories',
+      newEventId: state => state.event.newEventId
     }),
     catLength() {
       return this.$store.getters.catLength
@@ -86,17 +89,19 @@ export default {
       }
     },
     createEvent() {
-      let that = this
+      NProgress.start()
       this.$store
         .dispatch('event/createEvent', this.event)
         .then(() => {
           this.$router.push({
             name: 'event-show',
-            params: { id: that.$store.state.newEventId }
+            params: { id: this.newEventId }
           })
           this.event = this.createFreshEvent()
         })
-        .catch(() => {})
+        .catch(() => {
+          NProgress.done()
+        })
     }
   },
   components: {

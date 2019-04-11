@@ -6,18 +6,20 @@ export const state = {
   events: [],
   event: {},
   newEventId: 0,
-  eventsTotal: 0
+  eventsTotal: 0,
+  perPage: 2
 }
 
 export const mutations = {
   ADD_EVENT(state, event) {
     state.events.push(event)
     state.newEventId = event.id
-    console.log(event)
-    console.log(event.id)
   },
   SET_EVENTS(state, events) {
     state.events = events
+  },
+  SET_EVENTS_TOTAL(state, eventsTotal) {
+    state.eventsTotal = eventsTotal
   },
   SET_EVENT(state, event) {
     state.event = event
@@ -29,6 +31,7 @@ export const actions = {
     return EventService.postEvent(event)
       .then(response => {
         commit('ADD_EVENT', response.data)
+        commit('SET_EVENT', response.data)
         const notification = {
           type: 'success',
           message: 'Your event has been created'
@@ -44,12 +47,11 @@ export const actions = {
         throw error
       })
   },
-  fetchEvents({ commit, dispatch }, { perPage, page }) {
-    EventService.getEvents(perPage, page)
+  fetchEvents({ commit, dispatch, state }, { page }) {
+    return EventService.getEvents(state.perPage, page)
       .then(response => {
         commit('SET_EVENTS', response.data)
-        this.state.event.eventsTotal =
-          parseInt(response.headers['x-total-count']) || 0
+        commit('SET_EVENTS_TOTAL', parseInt(response.headers['x-total-count']))
       })
       .catch(error => {
         const notification = {
