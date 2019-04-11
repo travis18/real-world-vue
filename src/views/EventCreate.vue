@@ -50,7 +50,6 @@
 import { mapState } from 'vuex'
 import Datepicker from 'vuejs-datepicker'
 import NProgress from 'nprogress'
-import store from '@/store'
 
 export default {
   data() {
