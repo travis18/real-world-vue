@@ -24,10 +24,18 @@ import store from '@/store'
 
 function getPageEvents(routeTo, next) {
   const currentPage = parseInt(routeTo.query.page) || 1
-  store.dispatch('event/fetchEvents', { page: currentPage }).then(() => {
-    routeTo.params.page = currentPage
-    next()
-  })
+  store
+    .dispatch('event/fetchEvents', { page: currentPage })
+    .then(() => {
+      routeTo.params.page = currentPage
+      next()
+    })
+    .catch(error => {
+      console.log(error)
+      if (!error.response) {
+        next({ name: 'network-issue' })
+      }
+    })
 }
 
 export default {

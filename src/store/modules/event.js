@@ -59,6 +59,7 @@ export const actions = {
           message: 'There was a problem fetching events: ' + error.message
         }
         dispatch('notification/add', notification, { root: true })
+        throw error
       })
   },
   fetchEvent({ commit, getters, dispatch }, id) {
@@ -86,6 +87,7 @@ export const actions = {
             message: 'There was a problem fetching events: ' + error.message
           }
           dispatch('notification/add', notification, { root: true })
+          throw error
         })
     }
   }
