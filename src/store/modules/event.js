@@ -14,6 +14,7 @@ export const mutations = {
   ADD_EVENT(state, event) {
     state.events.push(event)
     state.newEventId = event.id
+    console.log('event in mutation:', event)
   },
   SET_EVENTS(state, events) {
     state.events = events
@@ -28,8 +29,10 @@ export const mutations = {
 
 export const actions = {
   createEvent({ commit, dispatch }, event) {
+    console.log('event in action:', event)
     return EventService.postEvent(event)
       .then(response => {
+        console.log('postEvent response:', response)
         commit('ADD_EVENT', response.data)
         commit('SET_EVENT', response.data)
         const notification = {
