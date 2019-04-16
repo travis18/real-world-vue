@@ -6,6 +6,7 @@ import BaseIcon from '@/components/BaseIcon.vue'
 import BaseInput from '@/components/BaseInput.vue'
 import BaseSelect from '@/components/BaseSelect.vue'
 import BaseButton from '@/components/BaseButton.vue'
+import Vuelidate from 'vuelidate'
 
 import 'nprogress/nprogress.css'
 
@@ -14,6 +15,8 @@ Vue.component('BaseIcon', BaseIcon)
 Vue.component('BaseInput', BaseInput)
 Vue.component('BaseSelect', BaseSelect)
 Vue.component('BaseButton', BaseButton)
+
+Vue.use(Vuelidate)
 
 new Vue({
   router,

@@ -1,14 +1,15 @@
 <template>
   <div class="field">
     <label v-if="label">{{ label }}</label>
-    <select :value="value" @change="updateValue">
-      <option
-        v-for="option in options"
-        :key="option"
-        selected="option===value"
-        :value="option"
-        >{{ option }}</option
-      >
+    <select
+      :value="value"
+      v-on="listeners"
+      v-bind="$attrs"
+      @change="updateValue"
+    >
+      <option v-for="option in options" :key="option" :value="option">
+        {{ option }}
+      </option>
     </select>
   </div>
 </template>
@@ -27,6 +28,14 @@ export default {
   methods: {
     updateValue(event) {
       this.$emit('input', event.target.value)
+    }
+  },
+  computed: {
+    listeners() {
+      return {
+        ...this.$listeners,
+        input: this.updateValue
+      }
     }
   }
 }
